@@ -69,7 +69,7 @@ reg.fit(x_train, y_train)
 accuracy = []
 n_iterations = 1000
 for i in range(n_iterations):
-    X_bs, y_bs = resample(x_train, y_train, replace=True)
+    X_bs, y_bs = resample(x_test, y_test, replace=True)
     # make predictions
     y_hat = reg.predict(X_bs)
     # evaluate model
@@ -117,7 +117,7 @@ print(f"Model accuracy is reported on the test set. 1000 bootstrapped samples "
 
 ```
 Model accuracy is reported on the test set. 1000 bootstrapped samples were used to calculate 95% confidence intervals.
-Median accuracy is 0.86 with a 95% a confidence interval of [0.80,0.91].
+Median accuracy is 0.82 with a 95% a confidence interval of [0.73,0.90].
 ```
 {: .output}
 
