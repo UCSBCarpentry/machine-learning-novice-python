@@ -1,30 +1,33 @@
 ---
-title: "Data preparation"
+title: Data preparation
 teaching: 20
 exercises: 10
-questions:
-- "Why are some common steps in data preparation?"
-- "What is SQL and why is it often needed?"
-- "What do we partition data at the start of a project?"
-- "What is the purpose of setting a random state when partitioning?"
-- "Should we impute missing values before or after partitioning?"
-objectives:
-- "Explore characteristics of our dataset."
-- "Partition data into training and test sets."
-- "Encode categorical values."
-- "Use scaling to pre-process features."
-keypoints:
-- "Data pre-processing is arguably the most important task in machine learning."
-- "SQL is the tool that we use to extract data from database systems."
-- "Data is typically partitioned into training and test sets."
-- "Setting random states helps to promote reproducibility."
 ---
+
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Explore characteristics of our dataset.
+- Partition data into training and test sets.
+- Encode categorical values.
+- Use scaling to pre-process features.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- Why are some common steps in data preparation?
+- What is SQL and why is it often needed?
+- What do we partition data at the start of a project?
+- What is the purpose of setting a random state when partitioning?
+- Should we impute missing values before or after partitioning?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Sourcing and accessing data
 
-Machine learning helps us to find patterns in data, so sourcing and understanding data is key. Unsuitable or poorly managed data will lead to a poor project outcome, regardless of the modelling approach. 
+Machine learning helps us to find patterns in data, so sourcing and understanding data is key. Unsuitable or poorly managed data will lead to a poor project outcome, regardless of the modelling approach.
 
-We will be using an open access subset of the [eICU Collaborative Research Database](https://eicu-crd.mit.edu/about/eicu/), a publicly available dataset comprising deidentified physiological data collected from critically ill patients. For simplicity, we will be working with a pre-prepared CSV file that comprises data extracted from a [demo version of the dataset](https://doi.org/10.13026/4mxk-na84). 
+We will be using an open access subset of the [eICU Collaborative Research Database](https://eicu-crd.mit.edu/about/eicu/), a publicly available dataset comprising deidentified physiological data collected from critically ill patients. For simplicity, we will be working with a pre-prepared CSV file that comprises data extracted from a [demo version of the dataset](https://doi.org/10.13026/4mxk-na84).
 
 Let's begin by loading this data:
 
@@ -63,7 +66,6 @@ Summarizing data is an important first step. We will want to know aspects of the
 
 Let's generate a similar table for ourselves:
 
-
 ```python
 # !pip install tableone
 from tableone import tableone
@@ -81,7 +83,7 @@ t1
 # print(t1.tabulate(tablefmt = "latex"))
 ```
 
-```
+```output
 |                                 |         | Missing   | Overall      | ALIVE        | EXPIRED      |
 |---------------------------------|---------|-----------|--------------|--------------|--------------|
 | n                               |         |           | 235          | 195          | 40           |
@@ -101,18 +103,28 @@ t1
 | white cell count, mean (SD)     |         | 0         | 10.5 (8.4)   | 10.7 (8.2)   | 9.7 (9.7)    |
 | admissionheight, mean (SD)      |         | 2         | 168.0 (12.8) | 167.7 (13.4) | 169.4 (9.1)  |
 ```
-{: .output}
 
-> ## Exercise
-> A) What is the approximate percent mortality in the eICU cohort?  
-> B) Which variables appear noticeably different in the "Alive" and "Expired"  groups?  
-> C) How does the in-hospital mortality differ between the eICU cohort and the ones in [Rajkomar et al](https://www.nature.com/articles/s41746-018-0029-1/tables/1)?  
-> > ## Solution
-> > A) Approximately 17% (40/235)   
-> > B) Several variables differ, including age, length of stay, acute physiology score, heart rate, etc.  
-> > A) The Rajkomar et al dataset has significantly lower in-hospital mortality (~2% vs 17%).  
-> {: .solution}
-{: .challenge}
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Exercise
+
+A) What is the approximate percent mortality in the eICU cohort?  
+B) Which variables appear noticeably different in the "Alive" and "Expired"  groups?  
+C) How does the in-hospital mortality differ between the eICU cohort and the ones in [Rajkomar et al](https://www.nature.com/articles/s41746-018-0029-1/tables/1)?
+
+:::::::::::::::  solution
+
+## Solution
+
+A) Approximately 17% (40/235)  
+B) Several variables differ, including age, length of stay, acute physiology score, heart rate, etc.  
+A) The Rajkomar et al dataset has significantly lower in-hospital mortality (~2% vs 17%).  
+
+
+
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Encoding
 
@@ -154,7 +166,7 @@ Another popular encoding that you will come across in machine learning is "one h
 
 Typically we will want to split our data into a training set and "held-out" test set. The training set is used for building our model and our test set is used for evaluation. A split of ~70% training, 30% test is common.
 
-![Train and test set](../fig/train_test.png){: width="600px"}
+![](fig/train_test.png){alt='Train and test set' width="600px"}
 
 To ensure reproducibility, we should set the random state of the splitting method. This means that Python's random number generator will produce the same "random" split in future.
 
@@ -168,7 +180,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, train_size = 0.7, rand
 
 ## Missing data
 
-Certain types of models - for example some decision trees - are able to implicitly handle missing data. For our logistic regression, we will need to impute values. We will take a simple approach of replacing with the median. 
+Certain types of models - for example some decision trees - are able to implicitly handle missing data. For our logistic regression, we will need to impute values. We will take a simple approach of replacing with the median.
 
 With physiological data, imputing the median typically implies that the missing observation is not a cause for concern. In hospital you do not want to be the interesting patient!
 
@@ -180,7 +192,7 @@ x_train = x_train.fillna(x_train.median())
 x_test = x_test.fillna(x_train.median())
 ```
 
-It is often the case that data is not missing at random. For example, the presence of blood sugar observations may indicate suspected diabetes. To use this information, we can choose to create missing data features comprising of binary "is missing" flags. 
+It is often the case that data is not missing at random. For example, the presence of blood sugar observations may indicate suspected diabetes. To use this information, we can choose to create missing data features comprising of binary "is missing" flags.
 
 ## Normalisation
 
@@ -190,11 +202,11 @@ As with creating train and test splits, it is a common enough task that there ar
 
 $$
 x_{std} = \frac{x - x_{min}}{x_{max}-x_{min}}
-$$ 
+$$
 
 $$
 x_{scaled} = x_{std} * (x_{max}-x_{min}) + x_{min}
-$$ 
+$$
 
 ```python
 # Define the scaler
@@ -217,4 +229,15 @@ x_test = scaler.transform(x_test)
 
 Outliers in features can have a negative impact on the normalisation process - they can essentially squash non-outliers into a small space - so they may need special treatment (for example, a [RobustScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html#sklearn.preprocessing.RobustScaler))
 
-{% include links.md %}
+
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- Data pre-processing is arguably the most important task in machine learning.
+- SQL is the tool that we use to extract data from database systems.
+- Data is typically partitioned into training and test sets.
+- Setting random states helps to promote reproducibility.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+

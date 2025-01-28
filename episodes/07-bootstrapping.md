@@ -1,17 +1,21 @@
 ---
-title: "Bootstrapping"
+title: Bootstrapping
 teaching: 20
 exercises: 10
-questions:
-- "Why do we 'boot up' computers?"
-- "How is bootstrapping commonly used in machine learning?"
-objectives:
-- "Use bootstrapping to compute confidence intervals."
-keypoints:
-- "Bootstrapping is a resampling technique, sometimes confused with cross-validation."
-- "Bootstrapping allows us to generate a distribution of estimates, rather than a single point estimate."
-- "Bootstrapping allows us to estimate uncertainty, allowing computation of confidence intervals."
 ---
+
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Use bootstrapping to compute confidence intervals.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- Why do we 'boot up' computers?
+- How is bootstrapping commonly used in machine learning?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Bootstrapping
 
@@ -23,7 +27,7 @@ Typically our source data is only a small sample of the ground truth. Bootstrapp
 
 Using bootstrapping, we can generate a distribution of estimates, rather than a single point estimate. The distribution gives us information about certainty, or the lack of it.
 
-In [Figure 2 of the Rajkomar paper](https://www.nature.com/articles/s41746-018-0029-1/figures/2), the authors note that "the error bars represent the bootstrapped 95% confidence interval" for the AUROC values. Let's use the same approach to calculate a confidence interval when evaluating the accuracy of a model on a held-out test set. Steps: 
+In [Figure 2 of the Rajkomar paper](https://www.nature.com/articles/s41746-018-0029-1/figures/2), the authors note that "the error bars represent the bootstrapped 95% confidence interval" for the AUROC values. Let's use the same approach to calculate a confidence interval when evaluating the accuracy of a model on a held-out test set. Steps:
 
 1. Draw a sample of size N from the original dataset with replacement. This is a bootstrap sample.
 2. Repeat step 1 S times, so that we have S bootstrap samples.
@@ -88,13 +92,13 @@ plt.xlabel("Accuracy")
 plt.show()
 ```
 
-![Bootstrapped accuracy](../fig/section8-fig1.png){: width="600px"}
+![](fig/section8-fig1.png){alt='Bootstrapped accuracy' width="600px"}
 
 We can now take the mean accuracy across the bootstrap samples, and compute confidence intervals. There are several different approaches to computing the confidence interval. We will use the percentile method, a simpler approach that does not require our sampling distribution to be normally distributed.
 
 ## Percentile method
 
-For a 95% confidence interval we can find the middle 95% bootstrap statistics. This is known as the percentile method. This is the preferred method because it works regardless of the shape of the sampling distribution.  
+For a 95% confidence interval we can find the middle 95% bootstrap statistics. This is known as the percentile method. This is the preferred method because it works regardless of the shape of the sampling distribution.
 
 Regardless of the shape of the bootstrap sampling distribution, we can use the percentile method to construct a confidence interval. Using this method, the 95% confidence interval is the range of points that cover the middle 95% of bootstrap sampling distribution.
 
@@ -115,12 +119,10 @@ print(f"Model accuracy is reported on the test set. 1000 bootstrapped samples "
       f"interval of [{lower_ci:.2f},{upper_ci:.2f}].")
 ```
 
-```
+```output
 Model accuracy is reported on the test set. 1000 bootstrapped samples were used to calculate 95% confidence intervals.
 Median accuracy is 0.82 with a 95% a confidence interval of [0.73,0.90].
 ```
-{: .output}
-
 
 ```python
 sns.kdeplot(accuracy)
@@ -133,10 +135,20 @@ plt.axvline(upper_ci,0, 14, linestyle="--", color="red")
 plt.show()
 ```
 
-![Bootstrapped accuracy with confidence](../fig/section8-fig2.png){: width="600px"}
+![](fig/section8-fig2.png){alt='Bootstrapped accuracy with confidence' width="600px"}
 
 Once an interval is calculated, it may or may not contain the true value of the unknown parameter. A 95% confidence level does \*not\* mean that there is a 95% probability that the population parameter lies within the interval.
 
 The confidence interval tells us about the reliability of the estimation procedure. 95% of confidence intervals computed at the 95% confidence level contain the true value of the parameter.
 
-{% include links.md %}
+
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- Bootstrapping is a resampling technique, sometimes confused with cross-validation.
+- Bootstrapping allows us to generate a distribution of estimates, rather than a single point estimate.
+- Bootstrapping allows us to estimate uncertainty, allowing computation of confidence intervals.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+

@@ -1,23 +1,27 @@
 ---
-title: "Modelling"
+title: Modelling
 teaching: 20
 exercises: 20
-questions:
-- "Broadly speaking, when talking about regression and classification, how does the prediction target differ?"
-- "Would linear regression be most useful for a regression or classification task? How about logistic regression?"
-objectives:
-- "Use a linear regression model for prediction."
-- "Use a logistic regression model for prediction."
-- "Set a decision boundary to predict an outcome from a probability."
-keypoints:
-- "Linear regression is a popular model for regression tasks."
-- "Logistic regression is a popular model for classification tasks."
-- "Probabilities that can be mapped to a prediction class."
 ---
+
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Use a linear regression model for prediction.
+- Use a logistic regression model for prediction.
+- Set a decision boundary to predict an outcome from a probability.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- Broadly speaking, when talking about regression and classification, how does the prediction target differ?
+- Would linear regression be most useful for a regression or classification task? How about logistic regression?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Regression vs classification
 
-Predicting one or more classes is typically referred to as *classification*. The task of predicting a continuous variable on the other hand (for example, length of hospital stay) is typically referred to as a *regression*. 
+Predicting one or more classes is typically referred to as *classification*. The task of predicting a continuous variable on the other hand (for example, length of hospital stay) is typically referred to as a *regression*.
 
 Note that "regression models" can be used for both regression tasks and classification tasks. Don't let this throw you off!
 
@@ -31,7 +35,7 @@ Our predictions can be denoted by $\hat{y}$ (pronounced "y hat") and our explana
 
 There are two parameters of the model that we would like to learn from the training data: $w$, weight and $b$, bias. Could we use a linear regression for our classification task? Let's try fitting a line to our outcome data.
 
-```python
+```python, python
 # import the regression model
 import numpy as np
 from matplotlib import pyplot as plt
@@ -56,17 +60,16 @@ plt.scatter(X, y,  color='black', marker = 'x')
 plt.plot(X_fit, y_fit, color='red', linewidth=2)
 plt.show()
 ```
-{: .language-python}
 
-![Linear regression with binary outcome](../fig/section5-fig1.png){: width="600px"}
+![](fig/section5-fig1.png){alt='Linear regression with binary outcome' width="600px"}
 
 Linear regression places a line through a set of data points that minimizes the error between the line and the points. It is difficult to see how a meaningful threshold could be set to predict the binary outcome in our task. The predicted values can exceed our range of outcomes.
 
 ## Sigmoid function
 
-The sigmoid function (also known as a logistic function) comes to our rescue. This function gives an "s" shaped curve that can take a number and map it into a value between 0 and 1: 
+The sigmoid function (also known as a logistic function) comes to our rescue. This function gives an "s" shaped curve that can take a number and map it into a value between 0 and 1:
 
-$$f : \mathbb{R} \mapsto (0,1) $$ 
+$$f : \mathbb{R} \mapsto (0,1) $$
 
 The sigmoid function can be written as:
 
@@ -90,7 +93,7 @@ plt.plot(x, sigmoid(x))
 plt.show()
 ```
 
-![Sigmoid function](../fig/section5-fig2.png){: width="600px"}
+![](fig/section5-fig2.png){alt='Sigmoid function' width="600px"}
 
 We can use this to map our linear regression to produce output values that fall between 0 and 1.
 
@@ -104,24 +107,33 @@ As an added benefit, we can interpret the output value as a probability. The pro
 
 Logistic regressions are powerful models that often outperform more sophisticated machine learning models.  In machine learning studies it is typical to include performance of a logistic regression model as a baseline (as they do, for example, in [Rajkomar and colleagues](https://www.nature.com/articles/s41746-018-0029-1#Sec20)).
 
-We need to find the parameters for the best-fitting logistic model given our data. As before, we do this with the help of a loss function that quantifies error. Our goal is to find the parameters of the model that minimise the error. With this model, we no longer use least squares due to the model's non-linear properties. Instead we will use log loss. 
+We need to find the parameters for the best-fitting logistic model given our data. As before, we do this with the help of a loss function that quantifies error. Our goal is to find the parameters of the model that minimise the error. With this model, we no longer use least squares due to the model's non-linear properties. Instead we will use log loss.
 
 ## Training (or fitting) the model
 
 As is typically the case when using machine learning packages, we don't need to code the loss function ourselves. The function is implemented as part of our machine learning package (in this case [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)). Let's try fitting a Logistic Regression to our data.
 
+:::::::::::::::::::::::::::::::::::::::  challenge
 
-> ## Exercise
-> A) Following the previous example for a linear regression, fit a logistic regression to your data and create a new plot. How do the predictions differ from before? Hint: `from sklearn.linear_model import LogisticRegression`.
-> 
-> > ## Solution
-> > A) You should see a plot similar to the one below: ![Logistic regression](../fig/section5-fig3.png){: width="600px"}
-> {: .solution}
-{: .challenge}
+## Exercise
+
+A) Following the previous example for a linear regression, fit a logistic regression to your data and create a new plot. How do the predictions differ from before? Hint: `from sklearn.linear_model import LogisticRegression`.
+
+:::::::::::::::  solution
+
+## Solution
+
+A) You should see a plot similar to the one below: ![](fig/section5-fig3.png){alt='Logistic regression' width="600px"}
+
+
+
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Decision boundary
 
-Now that our model is able to output the probability of our outcome, we can set a decision boundary for the classification task. For example, we could classify probabilities of < 0.5 as "ALIVE" and >= 0.5 as "EXPIRED". Using this approach, we can predict outcomes for a given input.
+Now that our model is able to output the probability of our outcome, we can set a decision boundary for the classification task. For example, we could classify probabilities of \< 0.5 as "ALIVE" and >= 0.5 as "EXPIRED". Using this approach, we can predict outcomes for a given input.
 
 ```python
 x = [[90]]
@@ -131,10 +143,19 @@ print(f'For x={x[0][0]}, we predict an outcome of "{outcome[0]}".\n'
       f'Class probabilities (0, 1): {round(probs[0],2), round(probs[1],2)}.')
 ```
 
-```
+```output
 For x=90, we predict an outcome of "0".
 Class probabilities (0, 1): (0.77, 0.23).
 ```
-{: .output}
 
-{% include links.md %}
+
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- Linear regression is a popular model for regression tasks.
+- Logistic regression is a popular model for classification tasks.
+- Probabilities that can be mapped to a prediction class.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+

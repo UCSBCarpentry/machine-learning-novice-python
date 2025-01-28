@@ -1,26 +1,29 @@
 ---
-title: "Evaluation"
+title: Evaluation
 teaching: 20
 exercises: 10
-questions:
-- "What kind of values go into a confusion matrix?"
-- "What do the letters AUROC stand for?"
-- "Does an AUROC of 0.5 indicate our predictions were good, bad, or average?"
-- "In the context of evaluating performance of a classifier, what is TP?"
-objectives:
-- "Create a confusion matrix for a predictive model."
-- "Use the confusion matrix to compute popular performance metrics."
-- "Plot an AUROC curve."
-
-keypoints:
-- "Confusion matrices are the basis for many popular performance metrics."
-- "AUROC is the area under the receiver operating characteristic. 0.5 is bad!"
-- "TP is True Positive, meaning that our prediction hit its target."
 ---
+
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Create a confusion matrix for a predictive model.
+- Use the confusion matrix to compute popular performance metrics.
+- Plot an AUROC curve.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What kind of values go into a confusion matrix?
+- What do the letters AUROC stand for?
+- Does an AUROC of 0.5 indicate our predictions were good, bad, or average?
+- In the context of evaluating performance of a classifier, what is TP?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Evaluating a classification task
 
-We trained a machine learning model to predict the outcome of patients admitted to intensive care units. As there are two outcomes, we refer to this as a "binary" classification task. We are now ready to evaluate the model on our held-out test set. 
+We trained a machine learning model to predict the outcome of patients admitted to intensive care units. As there are two outcomes, we refer to this as a "binary" classification task. We are now ready to evaluate the model on our held-out test set.
 
 ```python
 from sklearn.linear_model import LogisticRegression
@@ -67,10 +70,9 @@ rounded_probs = [round(x,2) for x in probs]
 print(rounded_probs)
 ```
 
-```
+```output
 [0.09, 0.11, 0.23, 0.21, 0.23, 0.21, 0.19, 0.03, 0.2, 0.67, 0.54, 0.72]
 ```
-{: .output}
 
 These probabilities correspond to the following predictions, either a "0" ("ALIVE") or a 1 ("EXPIRED"):
 
@@ -78,10 +80,9 @@ These probabilities correspond to the following predictions, either a "0" ("ALIV
 print(y_hat_test[:12])
 ```
 
-```
+```output
 [0 0 0 0 0 0 0 0 0 1 1 1]
 ```
-{: .output}
 
 In comparison with the known outcomes, we can put each prediction into one of the following categories:
 
@@ -94,19 +95,18 @@ In comparison with the known outcomes, we can put each prediction into one of th
 print(y_test[:12])
 ```
 
-```
+```output
 [0 0 0 0 0 0 1 0 0 0 0 0]
 ```
-{: .output}
 
 ## Confusion matrices
 
 It is common practice to arrange these outcome categories into a "confusion matrix", which is a grid that records our predictions against the ground truth. For a binary outcome, confusion matrices are organised as follows:
 
-|                        | Negative (predicted)   | Positive  (predicted)   |
-| :---                   |    :----:           |          :----:      |
-| Negative (actual)   | **TN**              | FP                   |
-| Positive (actual)   | FN                  | **TP**               |
+|                   | Negative (predicted) | Positive  (predicted) | 
+| :---------------- | :------------------: | :-------------------: |
+| Negative (actual) | **TN**                     | FP                    | 
+| Positive (actual) | FN                   | **TP**                      | 
 
 The sum of the cells is the total number of predictions. The diagonal from top left to bottom right indicates correct predictions. Let's visualize the results of the model in the form of a confusion matrix:
 
@@ -123,13 +123,13 @@ disp = metrics.ConfusionMatrixDisplay.from_estimator(
 plt.show()
 ```
 
-![Confusion matrix](../fig/section7-fig1.png){: width="600px"}
+![](fig/section7-fig1.png){alt='Confusion matrix' width="600px"}
 
 We have two columns and rows because we have a binary outcome, but you can also extend the matrix to plot multi-class classification predictions. If we had more output classes, the number of columns and rows would match the number of classes.
 
 ## Accuracy
 
-Accuracy is the overall proportion of correct predictions. Think of a dartboard. How many shots did we take? How many did we hit? Divide one by the other and that's the accuracy. 
+Accuracy is the overall proportion of correct predictions. Think of a dartboard. How many shots did we take? How many did we hit? Divide one by the other and that's the accuracy.
 
 Accuracy can be written as:
 
@@ -137,17 +137,16 @@ $$
 Accuracy = \frac{TP+TN}{TP+TN+FP+FN}
 $$
 
-What was the accuracy of our model? 
+What was the accuracy of our model?
 
 ```python
 acc = metrics.accuracy_score(y_test, y_hat_test)
 print(f"Accuracy (model) = {acc:.2f}")
 ```
 
-```
+```output
 Accuracy (model) = 0.82
 ```
-{: .output}
 
 Not bad at first glance. When comparing our performance to guessing "0" for every patient, however, it seems slightly less impressive!
 
@@ -157,14 +156,13 @@ acc = metrics.accuracy_score(y_test, zeros)
 print(f"Accuracy (zeros) = {acc:.2f}")
 ```
 
-```
+```output
 Accuracy (zeros) = 0.92
 ```
-{: .output}
 
 The problem with accuracy as a metric is that it is heavily influenced by prevalence of the positive outcome: because the proportion of 1s is relatively low, classifying everything as 0 is a safe bet.
 
-We can see that the high accuracy is possible despite totally missing our target. To evaluate an algorithm in a way that prevalence does not cloud our assessment, we often look at sensitivity and specificity. 
+We can see that the high accuracy is possible despite totally missing our target. To evaluate an algorithm in a way that prevalence does not cloud our assessment, we often look at sensitivity and specificity.
 
 ## Sensitivity (A.K.A "Recall" and "True Positive Rate")
 
@@ -194,6 +192,16 @@ metrics.plot_roc_curve(reg, x_test, y_test)
 
 An AUROC of 0.5 is no better than guessing and an AUROC of 1.0 is perfect. An AUROC of 0.9 tells us that the 90% of times our model will assign a higher risk to a randomly selected patient with an event than to a randomly selected patient without an event
 
-![AUROC](../fig/section7-fig3.png){: width="600px"}
+![](fig/section7-fig3.png){alt='AUROC' width="600px"}
 
-{% include links.md %}
+
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- Confusion matrices are the basis for many popular performance metrics.
+- AUROC is the area under the receiver operating characteristic. 0.5 is bad!
+- TP is True Positive, meaning that our prediction hit its target.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
