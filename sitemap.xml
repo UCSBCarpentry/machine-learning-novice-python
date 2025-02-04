@@ -34,7 +34,13 @@
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/aio.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/discuss.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/images.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/index.html</loc>
@@ -73,16 +79,34 @@
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/aio.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/discuss.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/images.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/index.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/instructor-notes.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/key-points.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/profiles.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/reference.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/instructor-notes.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/key-points.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-python/profiles.html</loc>
