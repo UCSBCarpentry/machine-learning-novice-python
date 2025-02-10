@@ -35,7 +35,7 @@ Our predictions can be denoted by $\hat{y}$ (pronounced "y hat") and our explana
 
 There are two parameters of the model that we would like to learn from the training data: $w$, weight and $b$, bias. Could we use a linear regression for our classification task? Let's try fitting a line to our outcome data.
 
-```python, python
+```python
 # import the regression model
 import numpy as np
 from matplotlib import pyplot as plt
