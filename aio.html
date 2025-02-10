@@ -1151,7 +1151,7 @@ point (i.e. the lowest error).</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: upper-alpha">
 <li>A loss function quantifies the goodness of fit of a model (i.e. how
@@ -1193,7 +1193,7 @@ in a process known as ‘training’.</li>
 </div>
 </section></section><section id="aio-04-modelling"><p>Content from <a href="04-modelling.html">Modelling</a></p>
 <hr>
-<p>Last updated on 2025-01-28 |
+<p>Last updated on 2025-02-10 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-novice-python/edit/main/episodes/04-modelling.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1253,66 +1253,66 @@ from the training data: <span class="math inline">\(w\)</span>, weight
 and <span class="math inline">\(b\)</span>, bias. Could we use a linear
 regression for our classification task? Let’s try fitting a line to our
 outcome data.</p>
-<p>```python, python # import the regression model import numpy as np
-from matplotlib import pyplot as plt from sklearn.linear_model import
-LinearRegression reg = LinearRegression()</p>
-</section><div class="section level1">
-<h1 id="use-a-single-feature-apache-score">use a single feature (apache score)<a class="anchor" aria-label="anchor" href="#use-a-single-feature-apache-score"></a>
-</h1>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># import the regression model</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>reg <span class="op">=</span> LinearRegression()</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># use a single feature (apache score)</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># note: remove the reshape if fitting to &gt;1 input variable</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>X <span class="op">=</span> cohort.apachescore.values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>y <span class="op">=</span> cohort.actualhospitalmortality_enc.values</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co"># fit the model to our data</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>reg <span class="op">=</span> reg.fit(X, y)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co"># get the y values</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="bu">buffer</span> <span class="op">=</span> <span class="fl">0.2</span><span class="op">*</span><span class="bu">max</span>(X)</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>X_fit <span class="op">=</span> np.linspace(<span class="bu">min</span>(X) <span class="op">-</span> <span class="bu">buffer</span>, <span class="bu">max</span>(X) <span class="op">+</span> <span class="bu">buffer</span>, num<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>y_fit <span class="op">=</span> reg.predict(X_fit)</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>plt.scatter(X, y,  color<span class="op">=</span><span class="st">'black'</span>, marker <span class="op">=</span> <span class="st">'x'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>plt.plot(X_fit, y_fit, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
-<div class="section level1">
-<h1 id="note-remove-the-reshape-if-fitting-to-1-input-variable">note: remove the reshape if fitting to &gt;1 input variable<a class="anchor" aria-label="anchor" href="#note-remove-the-reshape-if-fitting-to-1-input-variable"></a>
-</h1>
-<p>X = cohort.apachescore.values.reshape(-1, 1) y =
-cohort.actualhospitalmortality_enc.values</p>
+<figure><img src="fig/section5-fig1.png" alt="Linear regression with binary outcome" width="600" class="figure mx-auto d-block"></figure><p>Linear regression places a line through a set of data points that
+minimizes the error between the line and the points. It is difficult to
+see how a meaningful threshold could be set to predict the binary
+outcome in our task. The predicted values can exceed our range of
+outcomes.</p>
+</section><section><h2 class="section-heading" id="sigmoid-function">Sigmoid function<a class="anchor" aria-label="anchor" href="#sigmoid-function"></a>
+</h2>
+<hr class="half-width">
+<p>The sigmoid function (also known as a logistic function) comes to our
+rescue. This function gives an “s” shaped curve that can take a number
+and map it into a value between 0 and 1:</p>
+<p><span class="math display">\[f : \mathbb{R} \mapsto (0,1)
+\]</span></p>
+<p>The sigmoid function can be written as:</p>
+<p><span class="math display">\[f(x) = \frac{1}{1+e^{-x}}\]</span></p>
+<p>Let’s take a look at a curve generated by this function:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="kw">def</span> sigmoid(x, k<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">    Sigmoid function. </span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">    Adjust k to set slope.</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    s <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>x <span class="op">/</span> k)) </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    <span class="cf">return</span> s</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co"># set range of values for x</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">50</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>plt.plot(x, sigmoid(x))</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
-<div class="section level1">
-<h1 id="fit-the-model-to-our-data">fit the model to our data<a class="anchor" aria-label="anchor" href="#fit-the-model-to-our-data"></a>
-</h1>
-<p>reg = reg.fit(X, y)</p>
-</div>
-<div class="section level1">
-<h1 id="get-the-y-values">get the y values<a class="anchor" aria-label="anchor" href="#get-the-y-values"></a>
-</h1>
-<p>buffer = 0.2*max(X) X_fit = np.linspace(min(X) - buffer, max(X) +
-buffer, num=50) y_fit = reg.predict(X_fit)</p>
-</div>
-<div class="section level1">
-<h1 id="plot">plot<a class="anchor" aria-label="anchor" href="#plot"></a>
-</h1>
-<p>plt.scatter(X, y, color=‘black’, marker = ‘x’) plt.plot(X_fit, y_fit,
-color=‘red’, linewidth=2) plt.show()</p>
-<pre><code>
-![](fig/section5-fig1.png){alt='Linear regression with binary outcome' width="600px"}
-
-Linear regression places a line through a set of data points that minimizes the error between the line and the points. It is difficult to see how a meaningful threshold could be set to predict the binary outcome in our task. The predicted values can exceed our range of outcomes.
-
-## Sigmoid function
-
-The sigmoid function (also known as a logistic function) comes to our rescue. This function gives an "s" shaped curve that can take a number and map it into a value between 0 and 1:
-
-$$f : \mathbb{R} \mapsto (0,1) $$
-
-The sigmoid function can be written as:
-
-$$f(x) = \frac{1}{1+e^{-x}}$$
-
-Let's take a look at a curve generated by this function:
-
-```python
-def sigmoid(x, k=0.1):
-    """
-    Sigmoid function.
-    Adjust k to set slope.
-    """
-    s = 1 / (1 + np.exp(-x / k))
-    return s
-
-# set range of values for x
-x = np.linspace(-1, 1, 50)
-
-plt.plot(x, sigmoid(x))
-plt.show()</code></pre>
 <figure><img src="fig/section5-fig2.png" alt="Sigmoid function" width="600" class="figure mx-auto d-block"></figure><p>We can use this to map our linear regression to produce output values
 that fall between 0 and 1.</p>
 <p><span class="math display">\[
@@ -1322,9 +1322,9 @@ f(x) = \frac{1}{1+e^{-({wX + b})}}
 probability. The probability relates to the positive class (the outcome
 with value “1”), which in our case is in-hospital mortality
 (“EXPIRED”).</p>
-<div class="section level2">
-<h2 id="logistic-regression">Logistic regression<a class="anchor" aria-label="anchor" href="#logistic-regression"></a>
+</section><section><h2 class="section-heading" id="logistic-regression">Logistic regression<a class="anchor" aria-label="anchor" href="#logistic-regression"></a>
 </h2>
+<hr class="half-width">
 <p>Logistic regressions are powerful models that often outperform more
 sophisticated machine learning models. In machine learning studies it is
 typical to include performance of a logistic regression model as a
@@ -1336,10 +1336,9 @@ that quantifies error. Our goal is to find the parameters of the model
 that minimise the error. With this model, we no longer use least squares
 due to the model’s non-linear properties. Instead we will use log
 loss.</p>
-</div>
-<div class="section level2">
-<h2 id="training-or-fitting-the-model">Training (or fitting) the model<a class="anchor" aria-label="anchor" href="#training-or-fitting-the-model"></a>
+</section><section><h2 class="section-heading" id="training-or-fitting-the-model">Training (or fitting) the model<a class="anchor" aria-label="anchor" href="#training-or-fitting-the-model"></a>
 </h2>
+<hr class="half-width">
 <p>As is typically the case when using machine learning packages, we
 don’t need to code the loss function ourselves. The function is
 implemented as part of our machine learning package (in this case <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html" class="external-link">scikit-learn</a>).
@@ -1365,7 +1364,7 @@ predictions differ from before? Hint:
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: upper-alpha">
 <li>You should see a plot similar to the one below: <img src="fig/section5-fig3.png" alt="Logistic regression" width="600" class="figure">
@@ -1375,23 +1374,22 @@ predictions differ from before? Hint:
 </div>
 </div>
 </div>
-</div>
-<div class="section level2">
-<h2 id="decision-boundary">Decision boundary<a class="anchor" aria-label="anchor" href="#decision-boundary"></a>
+</section><section><h2 class="section-heading" id="decision-boundary">Decision boundary<a class="anchor" aria-label="anchor" href="#decision-boundary"></a>
 </h2>
+<hr class="half-width">
 <p>Now that our model is able to output the probability of our outcome,
 we can set a decision boundary for the classification task. For example,
 we could classify probabilities of &lt; 0.5 as “ALIVE” and &gt;= 0.5 as
 “EXPIRED”. Using this approach, we can predict outcomes for a given
 input.</p>
-<div class="codewrapper sourceCode" id="cb2">
+<div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>x <span class="op">=</span> [[<span class="dv">90</span>]]</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>outcome <span class="op">=</span> reg.predict(x)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>probs <span class="op">=</span> reg.predict_proba(x)[<span class="dv">0</span>]</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'For x=</span><span class="sc">{</span>x[<span class="dv">0</span>][<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, we predict an outcome of "</span><span class="sc">{</span>outcome[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">".</span><span class="ch">\n</span><span class="ss">'</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>      <span class="ss">f'Class probabilities (0, 1): </span><span class="sc">{</span><span class="bu">round</span>(probs[<span class="dv">0</span>],<span class="dv">2</span>)<span class="sc">,</span> <span class="bu">round</span>(probs[<span class="dv">1</span>],<span class="dv">2</span>)<span class="sc">}</span><span class="ss">.'</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>x <span class="op">=</span> [[<span class="dv">90</span>]]</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>outcome <span class="op">=</span> reg.predict(x)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>probs <span class="op">=</span> reg.predict_proba(x)[<span class="dv">0</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'For x=</span><span class="sc">{</span>x[<span class="dv">0</span>][<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, we predict an outcome of "</span><span class="sc">{</span>outcome[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">".</span><span class="ch">\n</span><span class="ss">'</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>      <span class="ss">f'Class probabilities (0, 1): </span><span class="sc">{</span><span class="bu">round</span>(probs[<span class="dv">0</span>],<span class="dv">2</span>)<span class="sc">,</span> <span class="bu">round</span>(probs[<span class="dv">1</span>],<span class="dv">2</span>)<span class="sc">}</span><span class="ss">.'</span>)</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1415,8 +1413,7 @@ tasks.</li>
 </div>
 </div>
 </div>
-</div>
-</div></section><section id="aio-05-validation"><p>Content from <a href="05-validation.html">Validation</a></p>
+</section></section><section id="aio-05-validation"><p>Content from <a href="05-validation.html">Validation</a></p>
 <hr>
 <p>Last updated on 2025-01-28 |
 
@@ -2405,8 +2402,8 @@ that is not available at prediction time.</li>
   "url": "https://carpentries-incubator.github.io/machine-learning-novice-python/aio.html",
   "identifier": "https://carpentries-incubator.github.io/machine-learning-novice-python/aio.html",
   "dateCreated": "2021-10-15",
-  "dateModified": "2025-02-04",
-  "datePublished": "2025-02-04"
+  "dateModified": "2025-02-10",
+  "datePublished": "2025-02-10"
 }
 
   </script><script>

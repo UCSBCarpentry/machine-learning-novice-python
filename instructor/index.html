@@ -350,7 +350,7 @@ machine learning.</p>
 helping carers to support the lives of the sickest patients within a
 hospital. These monitoring systems produce large volumes of data that
 could be used to improve patient care.</p>
-<figure><img src=".././fig/icu_patient.png" alt="Patient in the ICU" width="600" class="figure mx-auto d-block"></figure><p>Our goal will be to predict the outcome of critical care patients
+<figure><img src="../fig/icu_patient.png" alt="Patient in the ICU" width="600" class="figure mx-auto d-block"></figure><p>Our goal will be to predict the outcome of critical care patients
 using physiological data available on the first day of admission to the
 intensive care unit. These predictions could be used for resource
 planning or to assist with family discussions.</p>
@@ -358,8 +358,6 @@ planning or to assist with family discussions.</p>
 Research Database</a>, a publicly available dataset comprising
 deidentified physiological data collected from critically ill
 patients.</p>
-<!-- this is an html comment -->
-<p>{% comment %} This is a comment in Liquid {% endcomment %}</p>
 <div id="prerequisites" class="callout prereq">
 <div class="callout-square">
 <i class="callout-icon" data-feather="check"></i>
@@ -369,15 +367,14 @@ patients.</p>
 <div class="callout-content">
 <p>You need to understand the basics of Python before tackling this
 lesson. The lesson sometimes references Jupyter Notebook although you
-can use any Python interpreter mentioned in the
-[Setup][lesson-setup].</p>
+can use any Python interpreter mentioned in the Setup section below.</p>
 </div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a></h3>
-<p>To get started, follow the directions on the “[Setup][lesson-setup]”
-page to download data and install a Python interpreter.</p>
+<p>To get started, follow the directions on the Setup section below to
+download data and install a Python interpreter.</p>
 </div>
 </section><section id="schedule"><table class="table table schedule table-striped" role="presentation"><tbody><tr><td></td><td><a href="#setup">Setup Instructions</a></td><td> Download files required for the lesson</td>
           </tr><tr><td>
@@ -480,12 +477,13 @@ Finish
 </tr></tbody></table><p>
       The actual schedule may vary slightly depending on the topics and exercises chosen by the instructor.
       </p>
-      </section><section id="setup"><section><h2 class="section-heading" id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a></h2>
+      </section><section id="setup"><section><h2 class="section-heading" id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a></h2>
 <hr class="half-width"><p>This lesson is designed to be run on a personal computer. All of the
 software and data used in this lesson are freely available online, and
 instructions on how to obtain them are provided below.</p>
-</section><section><h2 class="section-heading" id="install-python">Install Python<a class="anchor" aria-label="anchor" href="#install-python"></a></h2>
-<hr class="half-width"><p>In this lesson, we will be using Python 3 with some of its most
+<div class="section level3">
+<h3 id="install-python">Install Python<a class="anchor" aria-label="anchor" href="#install-python"></a></h3>
+<p>In this lesson, we will be using Python 3 with some of its most
 popular scientific libraries. Although one can install a plain-vanilla
 Python and all required libraries by hand, we recommend installing <a href="https://www.anaconda.com/" class="external-link">Anaconda</a>, a Python distribution
 that comes with everything we need for the lesson. Detailed installation
@@ -493,64 +491,59 @@ instructions for various operating systems can be found on The
 Carpentries <a href="https://carpentries.github.io/workshop-template/#python" class="external-link">template
 website for workshops</a> and in <a href="https://docs.anaconda.com/anaconda/install" class="external-link">Anaconda
 documentation</a>.</p>
-</section><section><h2 class="section-heading" id="obtain-lesson-materials">Obtain lesson materials<a class="anchor" aria-label="anchor" href="#obtain-lesson-materials"></a></h2>
-<hr class="half-width"><ol style="list-style-type: decimal"><li>Download <a href=".././data/eicu_cohort.csv">eicu_cohort.csv</a>.</li>
+</div>
+<div class="section level3">
+<h3 id="obtain-lesson-materials">Obtain lesson materials<a class="anchor" aria-label="anchor" href="#obtain-lesson-materials"></a></h3>
+<ol style="list-style-type: decimal"><li>Download <a href=".././data/eicu_cohort.csv">eicu_cohort.csv</a>.</li>
 <li>Create a folder called <code>carpentries-ml-intro</code> on your
 Desktop.</li>
 <li>Move downloaded files to <code>carpentries-ml-intro</code>.</li>
-</ol></section><section><h2 class="section-heading" id="launch-python-interface">Launch Python interface<a class="anchor" aria-label="anchor" href="#launch-python-interface"></a></h2>
-<hr class="half-width"><p>To start working with Python, we need to launch a program that will
+</ol></div>
+<div class="section level3">
+<h3 id="launch-python-interface">Launch Python interface<a class="anchor" aria-label="anchor" href="#launch-python-interface"></a></h3>
+<p>To start working with Python, we need to launch a program that will
 interpret and execute our Python commands. Below we list several
 options. If you don’t have a preference, proceed with the top option in
 the list that is available on your machine. Otherwise, you may use any
 interface you like.</p>
-</section><section><h2 class="section-heading" id="option-a-jupyter-notebook">Option A: Jupyter Notebook<a class="anchor" aria-label="anchor" href="#option-a-jupyter-notebook"></a></h2>
-<hr class="half-width"><p>A Jupyter Notebook provides a browser-based interface for working
+<div class="section level4">
+<h4 id="option-a-jupyter-notebook">Option A: Jupyter Notebook<a class="anchor" aria-label="anchor" href="#option-a-jupyter-notebook"></a></h4>
+<p>A Jupyter Notebook provides a browser-based interface for working
 with Python. If you installed Anaconda, you can launch a notebook in two
 ways:</p>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1">
+<div class="tabs">
+<nav><div id="nav-tab-1" class="nav nav-tabs" role="tablist">
+<button class="nav-link active" id="nav-tab-1-1" data-bs-toggle="tab" data-bs-target="#nav-tabpanel-1-1" type="button" role="tab" aria-controls="nav-tabpanel-1-1" aria-selected="true">
+  <h3 class="tab-header" id="nav-tab-heading-1-1">
   Anaconda Navigator
-  </h4>
+  </h3>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
-<div class="accordion-body">
+<button class="nav-link" id="nav-tab-1-2" data-bs-toggle="tab" data-bs-target="#nav-tabpanel-1-2" type="button" role="tab" aria-controls="nav-tabpanel-1-2" aria-selected="false">
+  <h3 class="tab-header" id="nav-tab-heading-1-2">
+  Command line (Terminal)
+  </h3>
+</button>
+</div>
+</nav><div id="nav-tabContent-1" class="tab-content">
+<div id="nav-tabpanel-1-1" class="tab-pane show active" role="tabpanel" aria-labelledby="nav-tab-1-1">
 <ol style="list-style-type: decimal"><li>Launch Anaconda Navigator. It might ask you if you’d like to send
-anonymized usage information to Anaconda developers: <img src="../%7B%7B%20page.root%20%7D%7D%7B%%20link%20fig/anaconda-navigator-first-launch.png%20%%7D" alt="Anaconda Navigator first launch" class="figure"> Make your choice and click “Ok,
+anonymized usage information to Anaconda developers: <img src="../fig/anaconda-navigator-first-launch.png" alt="Anaconda Navigator first launch" class="figure"> Make your choice and click “Ok,
 and don’t show again” button.</li>
-<li>Find the “Notebook” tab and click on the “Launch” button: <img src="../%7B%7B%20page.root%20%7D%7D%7B%%20link%20fig/anaconda-navigator-notebook-launch.png%20%%7D" alt="Anaconda Navigator Notebook launch" class="figure"> Anaconda will open a new
+<li>Find the “Notebook” tab and click on the “Launch” button: <img src="../fig/anaconda-navigator-notebook-launch.png" alt="Anaconda Navigator Notebook launch" class="figure"> Anaconda will open a new
 browser window or tab with a Notebook Dashboard showing you the contents
 of your Home (or User) folder.</li>
 <li>Navigate to the <code>data</code> directory by clicking on the
 directory names leading to it: <code>Desktop</code>,
-<code>swc-python</code>, then <code>data</code>: <img src="../%7B%7B%20page.root%20%7D%7D%7B%%20link%20fig/jupyter-notebook-data-directory.png%20%%7D" alt="Anaconda Navigator Notebook directory" class="figure"></li>
+<code>swc-python</code>, then <code>data</code>: <img src="../fig/jupyter-notebook-data-directory.png" alt="Anaconda Navigator Notebook directory" class="figure"></li>
 <li>Launch the notebook by clicking on the “New” button and then
-selecting “Python 3”: <img src="../%7B%7B%20page.root%20%7D%7D%7B%%20link%20fig/jupyter-notebook-launch-notebook.png%20%%7D" alt="Anaconda Navigator Notebook directory" class="figure"></li>
+selecting “Python 3”: <img src="../fig/jupyter-notebook-launch-notebook.png" alt="Anaconda Navigator Notebook directory" class="figure"></li>
 </ol></div>
-</div>
-</div>
-</div>
-<div id="accordionSolution6" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution6" aria-expanded="false" aria-controls="collapseSolution6">
-  <h4 class="accordion-header" id="headingSolution6">
-  Command line (Terminal)
-  </h4>
-</button>
-<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
-<div class="accordion-body">
-<p>1. Navigate to the <code>data</code> directory:</p>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2">
-  Unix shell
-  </h4>
-</button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
-<div class="accordion-body">
+<div id="nav-tabpanel-1-2" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-2">
+<p>Here the setup depends if you are using a Unix shell (Terminal or
+Console in macOS and Linux, or Git Bash on Windows) or the Windows
+Command Prompt.</p>
+<ul><li>Unix shell</li>
+</ul><p>Navigate to the <code>data</code> directory:</p>
 <p>If you’re using a Unix shell application, such as Terminal app in
 macOS, Console or Terminal in Linux, or <a href="https://gitforwindows.org" class="external-link">Git Bash</a> on Windows, execute the
 following command:</p>
@@ -559,74 +552,36 @@ following command:</p>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="bu">cd</span> ~/Desktop/swc-python/data</span></code></pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3">
-  Command Prompt (Windows)
-  </h4>
-</button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
-<div class="accordion-body">
-<p>On Windows, you can use its native Command Prompt program. The
-easiest way to start it up is pressing <kbd>Windows Logo
-Key</kbd>+<kbd>R</kbd>, entering <code>cmd</code>, and hitting
-<kbd>Return</kbd>. In the Command Prompt, use the following command to
-navigate to the <code>data</code> folder:</p>
-<pre class="source"><code>cd /D %userprofile%\Desktop\swc-python\data</code></pre>
-</div>
-</div>
-</div>
-</div>
-<p>2. Start Jupyter server</p>
-<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
-  <h4 class="accordion-header" id="headingSolution4">
-  Unix shell
-  </h4>
-</button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
-<div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb3">
+<p>Then, execute this command to start the Jupyter server:</p>
+<div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSolution5" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
-  <h4 class="accordion-header" id="headingSolution5">
-  Command Prompt (Windows)
-  </h4>
-</button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
-<div class="accordion-body">
+<ul><li>Command Prompt (Windows)</li>
+</ul><p>Navigate to the <code>data</code> directory: On Windows, you can use
+its native Command Prompt program. The easiest way to start it up is
+pressing Windows Logo Key + R, entering <code>cmd</code>, and hitting
+Return. In the Command Prompt, use the following command to navigate to
+the <code>data</code> folder:</p>
+<pre class="source"><code>cd /D %userprofile%\Desktop\swc-python\data</code></pre>
+<p>Then, execute this command to start the Jupyter server:</p>
 <pre class="source"><code>python -m notebook</code></pre>
+<p>Launch the notebook by clicking on the “New” button on the right and
+selecting “Python 3” from the drop-down menu: <img src="../fig/colab_files.png" alt="Anaconda Navigator Notebook directory" class="figure"></p>
 </div>
 </div>
 </div>
 </div>
-<p>3. Launch the notebook by clicking on the “New” button on the right
-and selecting “Python 3” from the drop-down menu: <img src="../%7B%7B%20page.root%20%7D%7D%7B%%20link%20fig/colab_files.png%20%%7D" alt="Anaconda Navigator Notebook directory" class="figure"></p>
-</div>
-</div>
-</div>
-</div>
-</section><section><h2 class="section-heading" id="option-b-cloud-notebook">Option B: Cloud Notebook<a class="anchor" aria-label="anchor" href="#option-b-cloud-notebook"></a></h2>
-<hr class="half-width"><p>Colaboratory, or “Colab”, is a cloud service that allows you to run a
+<div class="section level4">
+<h4 id="option-b-cloud-notebook">Option B: Cloud Notebook<a class="anchor" aria-label="anchor" href="#option-b-cloud-notebook"></a></h4>
+<p>Colaboratory, or “Colab”, is a cloud service that allows you to run a
 Jupyter-like Notebook in a web browser. To open a notebook, visit the <a href="https://colab.research.google.com/" class="external-link">Colaboratory website</a>. You
 can upload your datasets using the “Files” panel on the left side of the
 page.</p>
-<figure><img src="../fig/colab_files.png" alt="Google Colab" class="figure mx-auto d-block"></figure></section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
+<figure><img src="../fig/colab_files.png" alt="Google Colab" class="figure mx-auto d-block"></figure></div>
+</div>
+</section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link float-end" href="../instructor/01-what_is_ml.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
@@ -675,8 +630,8 @@ page.</p>
   "url": "https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/index.html",
   "identifier": "https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/index.html",
   "dateCreated": "2021-10-15",
-  "dateModified": "2025-02-04",
-  "datePublished": "2025-02-04"
+  "dateModified": "2025-02-10",
+  "datePublished": "2025-02-10"
 }
 
   </script><script>
