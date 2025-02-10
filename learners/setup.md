@@ -2,13 +2,13 @@
 title: Setup
 ---
 
-## Overview
+## Setup
 
 This lesson is designed to be run on a personal computer.
 All of the software and data used in this lesson are freely available online,
 and instructions on how to obtain them are provided below.
 
-## Install Python
+### Install Python
 
 In this lesson, we will be using Python 3 with some of its most popular scientific libraries.
 Although one can install a plain-vanilla Python and all required libraries by hand, we recommend installing [Anaconda][anaconda-website],
@@ -17,55 +17,49 @@ Detailed installation instructions for various operating systems can be found
 on The Carpentries [template website for workshops][anaconda-instructions]
 and in [Anaconda documentation][anaconda-install].
 
-## Obtain lesson materials
+### Obtain lesson materials
 
 1. Download [eicu\_cohort.csv](./data/eicu_cohort.csv).
 2. Create a folder called `carpentries-ml-intro` on your Desktop.
 3. Move downloaded files to `carpentries-ml-intro`.
 
-## Launch Python interface
+### Launch Python interface
 
 To start working with Python, we need to launch a program that will interpret and execute our Python commands. Below we list several options. If you don't have a preference, proceed with the top option in the list that is available on your machine. Otherwise, you may use any interface you like.
 
-## Option A: Jupyter Notebook
+#### Option A: Jupyter Notebook
+
 
 A Jupyter Notebook provides a browser-based interface for working with Python.
 If you installed Anaconda, you can launch a notebook in two ways:
 
-:::::::::::::::  solution
+::: tab
 
-## Anaconda Navigator
+### Anaconda Navigator
 
 1. Launch Anaconda Navigator.
   It might ask you if you'd like to send anonymized usage information to Anaconda developers:
-  ![Anaconda Navigator first launch](
-  {{ page.root }}{% link fig/anaconda-navigator-first-launch.png %})
+  ![Anaconda Navigator first launch](fig/anaconda-navigator-first-launch.png)
   Make your choice and click "Ok, and don't show again" button.
 2. Find the "Notebook" tab and click on the "Launch" button:
-  ![Anaconda Navigator Notebook launch](
-  {{ page.root }}{% link fig/anaconda-navigator-notebook-launch.png %})
+  ![Anaconda Navigator Notebook launch](fig/anaconda-navigator-notebook-launch.png)
   Anaconda will open a new browser window or tab with a Notebook Dashboard showing you the
   contents of your Home (or User) folder.
 3. Navigate to the `data` directory by clicking on the directory names leading to it:
   `Desktop`, `swc-python`, then `data`:
-  ![Anaconda Navigator Notebook directory](
-  {{ page.root }}{% link fig/jupyter-notebook-data-directory.png %})
+  ![Anaconda Navigator Notebook directory](fig/jupyter-notebook-data-directory.png)
 4. Launch the notebook by clicking on the "New" button and then selecting "Python 3":
-  ![Anaconda Navigator Notebook directory](
-  {{ page.root }}{% link fig/jupyter-notebook-launch-notebook.png %})
-  
+  ![Anaconda Navigator Notebook directory](fig/jupyter-notebook-launch-notebook.png)
 
-:::::::::::::::::::::::::
+### Command line (Terminal)
 
-:::::::::::::::  solution
+Here the setup depends if you are using a Unix shell 
+(Terminal or Console in macOS and Linux, or Git Bash on Windows) 
+or the Windows Command Prompt.
 
-## Command line (Terminal)
+- Unix shell
 
-1\. Navigate to the `data` directory:
-
-:::::::::::::::  solution
-
-## Unix shell
+Navigate to the `data` directory:
 
 If you're using a Unix shell application, such as Terminal app in macOS, Console or Terminal
 in Linux, or [Git Bash][gitbash] on Windows, execute the following command:
@@ -74,54 +68,37 @@ in Linux, or [Git Bash][gitbash] on Windows, execute the following command:
 cd ~/Desktop/swc-python/data
 ```
 
-:::::::::::::::::::::::::
+Then, execute this command to start the Jupyter server:
 
-:::::::::::::::  solution
+```bash
+jupyter notebook
+```
 
-## Command Prompt (Windows)
+- Command Prompt (Windows)
 
+Navigate to the `data` directory:
 On Windows, you can use its native Command Prompt program.  The easiest way to start it up is
-pressing <kbd>Windows Logo Key</kbd>\+<kbd>R</kbd>, entering `cmd`, and hitting
-<kbd>Return</kbd>. In the Command Prompt, use the following command to navigate to
+pressing Windows Logo Key + R, entering `cmd`, and hitting
+Return. In the Command Prompt, use the following command to navigate to
 the `data` folder:
 
 ```source
 cd /D %userprofile%\Desktop\swc-python\data
 ```
 
-:::::::::::::::::::::::::
-
-2\. Start Jupyter server
-
-:::::::::::::::  solution
-
-## Unix shell
-
-```bash
-jupyter notebook
-```
-
-:::::::::::::::::::::::::
-
-:::::::::::::::  solution
-
-## Command Prompt (Windows)
+Then, execute this command to start the Jupyter server:
 
 ```source
 python -m notebook
 ```
 
-:::::::::::::::::::::::::
-
-3\. Launch the notebook by clicking on the "New" button on the right and selecting "Python 3"
+Launch the notebook by clicking on the "New" button on the right and selecting "Python 3"
 from the drop-down menu:
-![Anaconda Navigator Notebook directory](
-{{ page.root }}{% link fig/colab\_files.png %})
+![Anaconda Navigator Notebook directory](fig/colab_files.png)
 
+:::
 
-:::::::::::::::::::::::::
-
-## Option B: Cloud Notebook
+#### Option B: Cloud Notebook
 
 Colaboratory, or "Colab", is a cloud service that allows you to run a Jupyter-like Notebook in a web browser. To open a notebook, visit the [Colaboratory website][google-colab]. You can upload your datasets using the "Files" panel on the left side of the page.
 
