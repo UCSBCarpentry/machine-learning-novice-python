@@ -8,6 +8,7 @@ exercises: 20
 
 - Use a linear regression model for prediction.
 - Use a logistic regression model for prediction.
+- Use a decision tree model for prediction.
 - Set a decision boundary to predict an outcome from a probability.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -148,12 +149,55 @@ For x=90, we predict an outcome of "0".
 Class probabilities (0, 1): (0.77, 0.23).
 ```
 
+## An Alternative Model - Decision Trees
 
+Decision trees are powerful and easy-to-interpret models for classification. They split data into smaller groups based on feature values, forming a tree-like structure where each path represents a decision. Because they capture non-linear patterns, decision trees are often used as a baseline model, similar to logistic regression.  
+
+To build a decision tree, we need a way to measure how "pure" each split is. This is done using **Gini impurity** or **entropy**. Gini impurity measures how often a randomly chosen data point would be misclassified, while entropy quantifies uncertainty in a group. Lower values indicate purer splits. At each step, the tree selects the feature split that reduces impurity the most, ensuring that the final groups contain mostly one class.  
+
+## Training (or fitting) the model  
+
+As with logistic regression, we don’t need to code the splitting logic ourselves. The decision tree algorithm is implemented in machine learning libraries such as [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html). Let's try fitting a decision tree to our data.  
+
+::::::::::::::::::::::::::::::::::::::: challenge  
+
+## Exercise  
+
+A) Following the previous example for logistic regression, fit a decision tree to your data and create a new plot. How do the predictions differ from before? Hint: `from sklearn.tree import DecisionTreeClassifier`.  
+
+::::::::::::::: solution  
+
+## Solution  
+
+A) You should see a plot similar to the one below:  
+
+TO-DO
+
+:::::::::::::::::::::::::  
+
+## Decision boundary  
+
+A decision tree assigns class labels by following a series of if-then rules. Once trained, we can use it to classify new data points. For example, we can check how a tree predicts the outcome for a specific input:  
+
+```python
+x = [[90]]
+outcome = tree.predict(x)
+probs = tree.predict_proba(x)[0]
+print(f'For x={x[0][0]}, we predict an outcome of "{outcome[0]}".\n'
+      f'Class probabilities (0, 1): {round(probs[0],2), round(probs[1],2)}.')
+```
+
+```output
+TO-DO
+```  
+
+This approach allows us to classify new inputs based on learned decision rules.
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
 - Linear regression is a popular model for regression tasks.
 - Logistic regression is a popular model for classification tasks.
+- Decision trees are a useful and easily interpretable alternative for classification tasks.
 - Probabilities that can be mapped to a prediction class.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
