@@ -248,6 +248,9 @@
 <li><a href="#logistic-regression">Logistic regression</a></li>
 <li><a href="#training-or-fitting-the-model">Training (or fitting) the model</a></li>
 <li><a href="#decision-boundary">Decision boundary</a></li>
+<li><a href="#an-alternative-model---decision-trees">An Alternative Model - Decision Trees</a></li>
+<li><a href="#training-or-fitting-the-model-1">Training (or fitting) the model</a></li>
+<li><a href="#decision-boundary-1">Decision boundary</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -348,7 +351,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Modelling</h1>
-        <p>Last updated on 2025-02-10 |
+        <p>Last updated on 2025-02-18 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-novice-python/edit/main/episodes/04-modelling.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -382,6 +385,7 @@ classification task? How about logistic regression?</li>
 <h3 class="card-title">Objectives</h3>
 <ul><li>Use a linear regression model for prediction.</li>
 <li>Use a logistic regression model for prediction.</li>
+<li>Use a decision tree model for prediction.</li>
 <li>Set a decision boundary to predict an outcome from a
 probability.</li>
 </ul></div>
@@ -541,6 +545,72 @@ input.</p>
 <pre class="output" tabindex="0"><code>For x=90, we predict an outcome of "0".
 Class probabilities (0, 1): (0.77, 0.23).</code></pre>
 </div>
+</section><section><h2 class="section-heading" id="an-alternative-model---decision-trees">An Alternative Model - Decision Trees<a class="anchor" aria-label="anchor" href="#an-alternative-model---decision-trees"></a></h2>
+<hr class="half-width"><p>Decision trees are powerful and easy-to-interpret models for
+classification. They split data into smaller groups based on feature
+values, forming a tree-like structure where each path represents a
+decision. Because they capture non-linear patterns, decision trees are
+often used as a baseline model, similar to logistic regression.</p>
+<p>To build a decision tree, we need a way to measure how “pure” each
+split is. This is done using <strong>Gini impurity</strong> or
+<strong>entropy</strong>. Gini impurity measures how often a randomly
+chosen data point would be misclassified, while entropy quantifies
+uncertainty in a group. Lower values indicate purer splits. At each
+step, the tree selects the feature split that reduces impurity the most,
+ensuring that the final groups contain mostly one class.</p>
+</section><section><h2 class="section-heading" id="training-or-fitting-the-model-1">Training (or fitting) the model<a class="anchor" aria-label="anchor" href="#training-or-fitting-the-model-1"></a></h2>
+<hr class="half-width"><p>As with logistic regression, we don’t need to code the splitting
+logic ourselves. The decision tree algorithm is implemented in machine
+learning libraries such as <a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html" class="external-link">scikit-learn</a>.
+Let’s try fitting a decision tree to our data.</p>
+<div id="exercise-1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="exercise-1" class="callout-inner">
+<h3 class="callout-title">Exercise</h3>
+<div class="callout-content">
+<ol style="list-style-type: upper-alpha"><li>Following the previous example for logistic regression, fit a
+decision tree to your data and create a new plot. How do the predictions
+differ from before? Hint:
+<code>from sklearn.tree import DecisionTreeClassifier</code>.</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<ol style="list-style-type: upper-alpha"><li>You should see a plot similar to the one below:</li>
+</ol><p>TO-DO</p>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="decision-boundary-1">Decision boundary<a class="anchor" aria-label="anchor" href="#decision-boundary-1"></a></h2>
+<hr class="half-width"><p>A decision tree assigns class labels by following a series of if-then
+rules. Once trained, we can use it to classify new data points. For
+example, we can check how a tree predicts the outcome for a specific
+input:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>x <span class="op">=</span> [[<span class="dv">90</span>]]</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>outcome <span class="op">=</span> tree.predict(x)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>probs <span class="op">=</span> tree.predict_proba(x)[<span class="dv">0</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'For x=</span><span class="sc">{</span>x[<span class="dv">0</span>][<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, we predict an outcome of "</span><span class="sc">{</span>outcome[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">".</span><span class="ch">\n</span><span class="ss">'</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>      <span class="ss">f'Class probabilities (0, 1): </span><span class="sc">{</span><span class="bu">round</span>(probs[<span class="dv">0</span>],<span class="dv">2</span>)<span class="sc">,</span> <span class="bu">round</span>(probs[<span class="dv">1</span>],<span class="dv">2</span>)<span class="sc">}</span><span class="ss">.'</span>)</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code><span><span class="va">TO</span><span class="op">-</span><span class="va">DO</span></span></code></pre>
+</div>
+<p>This approach allows us to classify new inputs based on learned
+decision rules.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -551,6 +621,8 @@ Class probabilities (0, 1): (0.77, 0.23).</code></pre>
 <ul><li>Linear regression is a popular model for regression tasks.</li>
 <li>Logistic regression is a popular model for classification
 tasks.</li>
+<li>Decision trees are a useful and easily interpretable alternative for
+classification tasks.</li>
 <li>Probabilities that can be mapped to a prediction class.</li>
 </ul></div>
 </div>
@@ -613,8 +685,8 @@ tasks.</li>
   "url": "https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/04-modelling.html",
   "identifier": "https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/04-modelling.html",
   "dateCreated": "2021-10-15",
-  "dateModified": "2025-02-10",
-  "datePublished": "2025-02-11"
+  "dateModified": "2025-02-18",
+  "datePublished": "2025-02-18"
 }
 
   </script><script>
