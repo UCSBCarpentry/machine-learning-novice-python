@@ -33,51 +33,68 @@ $$ Accuracy = \frac{Correct\ predictions}{All\ predictions}$$
 What is the accuracy of our model at predicting in-hospital mortality?
 
 ```python
+import pandas as pd
+import numpy as np
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 
-# convert outcome to a categorical type
-categories=['ALIVE', 'EXPIRED']
+# Convert outcome to categorical type
+categories = ['ALIVE', 'EXPIRED']
 cohort['actualhospitalmortality'] = pd.Categorical(cohort['actualhospitalmortality'], categories=categories)
 
-# add the encoded value to a new column
+# Encode categorical values
 cohort['actualhospitalmortality_enc'] = cohort['actualhospitalmortality'].cat.codes
 cohort[['actualhospitalmortality_enc','actualhospitalmortality']].head()
 
-# define features and outcome
+
+# Define features and outcome
 features = ['apachescore']
 outcome = ['actualhospitalmortality_enc']
 
-# partition data into training and test sets
+# Partition data into training and test sets
 X = cohort[features]
 y = cohort[outcome]
-x_train, x_test, y_train, y_test = train_test_split(X, y, train_size = 0.7, random_state = 42)
+x_train, x_test, y_train, y_test = train_test_split(X, y, train_size=0.7, random_state=42)
 
-# restructure data for input into model
-# note: remove the reshape if fitting to >1 input variable
+# Restructure data for model input
 x_train = x_train.values.reshape(-1, 1)
 y_train = y_train.values.ravel()
 x_test = x_test.values.reshape(-1, 1)
 y_test = y_test.values.ravel()
 
-# train model
-reg = LogisticRegression(random_state=0)
-reg.fit(x_train, y_train)
+# Train Logistic Regression model
+logreg = LogisticRegression(random_state=0)
+logreg.fit(x_train, y_train)
 
-# generate predictions
-y_hat_train = reg.predict(x_train)
-y_hat_test = reg.predict(x_test)
+# Train Decision Tree model
+tree = DecisionTreeClassifier(random_state=0)
+tree.fit(x_train, y_train)
 
-#  accuracy on training set
-acc_train = np.mean(y_hat_train == y_train)
-print(f'Accuracy on training set: {acc_train:.2f}')
+# Generate predictions
+y_hat_train_logreg = logreg.predict(x_train)
+y_hat_test_logreg = logreg.predict(x_test)
 
-#  accuracy on test set
-acc_test = np.mean(y_hat_test == y_test)
-print(f'Accuracy on test set: {acc_test:.2f}')
+y_hat_train_tree = tree.predict(x_train)
+y_hat_test_tree = tree.predict(x_test)
+
+# Accuracy on training set
+acc_train_logreg = np.mean(y_hat_train_logreg == y_train)
+acc_train_tree = np.mean(y_hat_train_tree == y_train)
+
+print(f'Logistic Regression - Accuracy on training set: {acc_train_logreg:.2f}')
+print(f'Decision Tree - Accuracy on training set: {acc_train_tree:.2f}')
+
+# Accuracy on test set
+acc_test_logreg = np.mean(y_hat_test_logreg == y_test)
+acc_test_tree = np.mean(y_hat_test_tree == y_test)
+
+print(f'Logistic Regression - Accuracy on test set: {acc_test_logreg:.2f}')
+print(f'Decision Tree - Accuracy on test set: {acc_test_tree:.2f}')
 ```
 
 ```output
+TO-DO
 Accuracy on training set: 0.86
 Accuracy on test set: 0.82
 ```
@@ -127,25 +144,34 @@ from numpy import mean, std
 from sklearn.model_selection import cross_val_score, RepeatedStratifiedKFold
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 
-# define dataset
+# Define dataset
 X = x_train
 y = y_train
 
-# define the pipeline
-steps = list()
-steps.append(('scaler', MinMaxScaler()))
-steps.append(('model', LogisticRegression()))
-pipeline = Pipeline(steps=steps)
-
-# define the evaluation procedure
+# Define evaluation procedure
 cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=3, random_state=1)
 
-# evaluate the model using cross-validation
-scores = cross_val_score(pipeline, X, y, scoring='accuracy', cv=cv, n_jobs=-1)
+# Logistic Regression pipeline
+logreg_pipeline = Pipeline([
+    ('scaler', MinMaxScaler()), 
+    ('model', LogisticRegression())
+])
 
-# report performance
-print('Cross-validation accuracy, mean (std): %.2f (%.2f)' % (mean(scores)*100, std(scores)*100))
+# Decision Tree pipeline
+tree_pipeline = Pipeline([
+    ('model', DecisionTreeClassifier())
+])
+
+# Evaluate Logistic Regression
+logreg_scores = cross_val_score(logreg_pipeline, X, y, scoring='accuracy', cv=cv, n_jobs=-1)
+print('Logistic Regression - Cross-validation accuracy: mean=%.2f%%, std=%.2f%%' % (mean(logreg_scores)*100, std(logreg_scores)*100))
+
+# Evaluate Decision Tree
+tree_scores = cross_val_score(tree_pipeline, X, y, scoring='accuracy', cv=cv, n_jobs=-1)
+print('Decision Tree - Cross-validation accuracy: mean=%.2f%%, std=%.2f%%' % (mean(tree_scores)*100, std(tree_scores)*100))
 ```
 
 ```output
