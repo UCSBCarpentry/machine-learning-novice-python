@@ -173,7 +173,9 @@ A) You should see a plot similar to the one below:
 
 TO-DO
 
-:::::::::::::::::::::::::  
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Decision boundary  
 
