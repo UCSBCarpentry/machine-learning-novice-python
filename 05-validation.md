@@ -63,11 +63,11 @@ y_train = y_train.values.ravel()
 x_test = x_test.values.reshape(-1, 1)
 y_test = y_test.values.ravel()
 
-# Train Logistic Regression model
+# Train ;ogistic regression model
 logreg = LogisticRegression(random_state=0)
 logreg.fit(x_train, y_train)
 
-# Train Decision Tree model
+# Train decision tree model
 tree = DecisionTreeClassifier(random_state=0)
 tree.fit(x_train, y_train)
 
@@ -94,12 +94,13 @@ print(f'Decision Tree - Accuracy on test set: {acc_test_tree:.2f}')
 ```
 
 ```output
-TO-DO
-Accuracy on training set: 0.86
-Accuracy on test set: 0.82
+Logistic Regression - Accuracy on training set: 0.86
+Decision Tree - Accuracy on training set: 0.94
+Logistic Regression - Accuracy on test set: 0.82
+Decision Tree - Accuracy on test set: 0.80
 ```
 
-Not bad! There was a slight drop in performance on our test set, but that is to be expected.
+Not bad! There was a slight drop in performance on our test set, but that is to be expected. One thing that is interesting to note is that just because one model outperforms the other in training, it does not mean that it will do better on unseen new data in the testing set.
 
 ## Validation set
 
@@ -154,28 +155,29 @@ y = y_train
 # Define evaluation procedure
 cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=3, random_state=1)
 
-# Logistic Regression pipeline
+# Logistic regression pipeline
 logreg_pipeline = Pipeline([
     ('scaler', MinMaxScaler()), 
     ('model', LogisticRegression())
 ])
 
-# Decision Tree pipeline
+# Decision tree pipeline
 tree_pipeline = Pipeline([
     ('model', DecisionTreeClassifier())
 ])
 
-# Evaluate Logistic Regression
+# Evaluate logistic regression
 logreg_scores = cross_val_score(logreg_pipeline, X, y, scoring='accuracy', cv=cv, n_jobs=-1)
 print('Logistic Regression - Cross-validation accuracy: mean=%.2f%%, std=%.2f%%' % (mean(logreg_scores)*100, std(logreg_scores)*100))
 
-# Evaluate Decision Tree
+# Evaluate decision tree
 tree_scores = cross_val_score(tree_pipeline, X, y, scoring='accuracy', cv=cv, n_jobs=-1)
 print('Decision Tree - Cross-validation accuracy: mean=%.2f%%, std=%.2f%%' % (mean(tree_scores)*100, std(tree_scores)*100))
 ```
 
 ```output
-Cross-validation accuracy, mean (std): 81.53 (3.31)
+Logistic Regression - Cross-validation accuracy: mean=81.53%, std=3.31%
+Decision Tree - Cross-validation accuracy: mean=83.16%, std=4.86%
 ```
 
 Leave-one-out cross validation is the same idea, except that we have many more folds. In fact, we have one fold for each data point. Each fold we leave out one data point for validation and use all of the other points for training.

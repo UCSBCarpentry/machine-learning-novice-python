@@ -41,7 +41,7 @@ There are two parameters of the model that we would like to learn from the train
 import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.linear_model import LinearRegression
-reg = LinearRegression()
+model = LinearRegression()
 
 # use a single feature (apache score)
 # note: remove the reshape if fitting to >1 input variable
@@ -49,12 +49,12 @@ X = cohort.apachescore.values.reshape(-1, 1)
 y = cohort.actualhospitalmortality_enc.values
 
 # fit the model to our data
-reg = reg.fit(X, y)
+model = model.fit(X, y)
 
 # get the y values
 buffer = 0.2*max(X)
 X_fit = np.linspace(min(X) - buffer, max(X) + buffer, num=50)
-y_fit = reg.predict(X_fit)
+y_fit = model.predict(X_fit)
 
 # plot
 plt.scatter(X, y,  color='black', marker = 'x')
@@ -124,7 +124,7 @@ A) Following the previous example for a linear regression, fit a logistic regres
 
 ## Solution
 
-A) You should see a plot similar to the one below: ![](fig/section5-fig3.png){alt='Logistic regression' width="600px"}
+A) You can reuse the Linear Regression code above and simply change `LinearRegression()` to `LogisticRegression()`. You should see a plot similar to the one below: ![](fig/section5-fig3.png){alt='Logistic regression' width="600px"}
 
 
 
@@ -138,8 +138,8 @@ Now that our model is able to output the probability of our outcome, we can set 
 
 ```python
 x = [[90]]
-outcome = reg.predict(x)
-probs = reg.predict_proba(x)[0]
+outcome = model.predict(x)
+probs = model.predict_proba(x)[0]
 print(f'For x={x[0][0]}, we predict an outcome of "{outcome[0]}".\n'
       f'Class probabilities (0, 1): {round(probs[0],2), round(probs[1],2)}.')
 ```
@@ -169,9 +169,7 @@ A) Following the previous example for logistic regression, fit a decision tree t
 
 ## Solution  
 
-A) You should see a plot similar to the one below:  
-
-TO-DO
+A) You can reuse the Linear Regression code above and simply change the model again to `DecisionTreeClassifier()`. You should see a plot similar to the one below: ![](fig/section5-fig4.png){alt='Logistic regression' width="600px"}
 
 :::::::::::::::::::::::::
 
@@ -183,17 +181,26 @@ A decision tree assigns class labels by following a series of if-then rules. Onc
 
 ```python
 x = [[90]]
-outcome = tree.predict(x)
-probs = tree.predict_proba(x)[0]
+outcome = model.predict(x)
+probs = model.predict_proba(x)[0]
 print(f'For x={x[0][0]}, we predict an outcome of "{outcome[0]}".\n'
       f'Class probabilities (0, 1): {round(probs[0],2), round(probs[1],2)}.')
 ```
 
 ```output
-TO-DO
+For x=90, we predict an outcome of "0".
+Class probabilities (0, 1): (0.67, 0.33).
 ```  
 
-This approach allows us to classify new inputs based on learned decision rules.
+This approach allows us to classify new inputs based on learned decision rules. Furthermore, the additional benefit of decision trees is that we can visualize the classification process by drawing out the final tree:
+
+```python
+from sklearn import tree
+plt.figure(figsize=(30,15))
+tree.plot_tree(model)
+```
+
+These outputs will show us the gini purity of each split in the decision tree. At the top of each node we can see a condition. The samples that satisfy that condition are split left and those that do not are split right.  We can see how many of the samples (listed as `values`) fall into each category which in our case is 0 and 1. At leaf nodes, we determine which category a particular input falls under by looking at the most common one in that node. 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 

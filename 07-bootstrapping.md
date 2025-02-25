@@ -36,63 +36,80 @@ In [Figure 2 of the Rajkomar paper](https://www.nature.com/articles/s41746-018-0
 
 ```python
 import matplotlib.pyplot as plt
+import numpy as np
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.utils import resample
 from sklearn.metrics import accuracy_score
 
-# convert outcome to a categorical type
-categories=['ALIVE', 'EXPIRED']
+# Convert outcome to categorical type
+categories = ['ALIVE', 'EXPIRED']
 cohort['actualhospitalmortality'] = pd.Categorical(cohort['actualhospitalmortality'], categories=categories)
 
-# add the encoded value to a new column
+# Encode categorical values
 cohort['actualhospitalmortality_enc'] = cohort['actualhospitalmortality'].cat.codes
-cohort[['actualhospitalmortality_enc','actualhospitalmortality']].head()
 
-# define features and outcome
+# Define features and outcome
 features = ['apachescore']
 outcome = ['actualhospitalmortality_enc']
 
-# partition data into training and test sets
+# Partition data into training and test sets
 X = cohort[features]
 y = cohort[outcome]
-x_train, x_test, y_train, y_test = train_test_split(X, y, train_size = 0.7, random_state = 42)
+x_train, x_test, y_train, y_test = train_test_split(X, y, train_size=0.7, random_state=42)
 
-# restructure data for input into model
-# note: remove the reshape if fitting to >1 input variable
+# Reshape data for input into model
 x_train = x_train.values.reshape(-1, 1)
 y_train = y_train.values.ravel()
 x_test = x_test.values.reshape(-1, 1)
 y_test = y_test.values.ravel()
 
-# train model
-reg = LogisticRegression(random_state=0)
-reg.fit(x_train, y_train)
+# Train Logistic Regression model
+logreg = LogisticRegression(random_state=0)
+logreg.fit(x_train, y_train)
 
-# bootstrap predictions
-accuracy = []
+# Train Decision Tree model
+tree = DecisionTreeClassifier(random_state=0)
+tree.fit(x_train, y_train)
+
+# Bootstrap predictions for Logistic Regression
+accuracy_logreg = []
+accuracy_tree = []
 n_iterations = 1000
+
 for i in range(n_iterations):
     X_bs, y_bs = resample(x_test, y_test, replace=True)
-    # make predictions
-    y_hat = reg.predict(X_bs)
-    # evaluate model
-    score = accuracy_score(y_bs, y_hat)
-    accuracy.append(score)
+    
+    # Logistic Regression predictions
+    y_hat_logreg = logreg.predict(X_bs)
+    score_logreg = accuracy_score(y_bs, y_hat_logreg)
+    accuracy_logreg.append(score_logreg)
+    
+    # Decision Tree predictions
+    y_hat_tree = tree.predict(X_bs)
+    score_tree = accuracy_score(y_bs, y_hat_tree)
+    accuracy_tree.append(score_tree)
 ```
 
 Let's plot a distribution of accuracy values computed on the bootstrap samples.
 
 ```python
 import seaborn as sns
-# plot distribution of accuracy
-sns.kdeplot(accuracy)
+import matplotlib.pyplot as plt
+
+# Plot distribution of bootstrap accuracy for both models
+sns.kdeplot(accuracy_logreg, label="Logistic Regression", fill=True, linewidth=2)
+sns.kdeplot(accuracy_tree, label="Decision Tree", fill=True linewidth=2)
+
 plt.title("Accuracy across 1000 bootstrap samples of the held-out test set")
 plt.xlabel("Accuracy")
+plt.ylabel("Density")
+plt.legend()
 plt.show()
 ```
 
-![](fig/section8-fig1.png){alt='Bootstrapped accuracy' width="600px"}
+![](fig/section8-fig1-1.png){alt='Bootstrapped accuracy' width="600px"}
 
 We can now take the mean accuracy across the bootstrap samples, and compute confidence intervals. There are several different approaches to computing the confidence interval. We will use the percentile method, a simpler approach that does not require our sampling distribution to be normally distributed.
 
@@ -105,37 +122,59 @@ Regardless of the shape of the bootstrap sampling distribution, we can use the p
 We determine the mean of each sample, call it X̄ , and create the sampling distribution of the mean. We then take the α/2 and 1 - α/2 percentiles (e.g. the .025*1000 and .975*1000 = 25th and 975th bootstrapped statistic), and these are the confidence limits.
 
 ```python
-# get median
-median = np.percentile(accuracy, 50)
+# Alpha level (95% confidence)
+alpha = 100 - 95
 
-# get 95% interval
-alpha = 100-95
-lower_ci = np.percentile(accuracy, alpha/2)
-upper_ci = np.percentile(accuracy, 100-alpha/2)
+# Get median for logistic regression accuracy
+median_logreg = np.percentile(accuracy_logreg, 50)
+lower_ci_logreg = np.percentile(accuracy_logreg, alpha / 2)
+upper_ci_logreg = np.percentile(accuracy_logreg, 100 - alpha / 2)
 
-print(f"Model accuracy is reported on the test set. 1000 bootstrapped samples " 
-      f"were used to calculate 95% confidence intervals.\n"
-      f"Median accuracy is {median:.2f} with a 95% a confidence "
-      f"interval of [{lower_ci:.2f},{upper_ci:.2f}].")
+# Get median for decision tree accuracy
+median_tree = np.percentile(accuracy_tree, 50)
+lower_ci_tree = np.percentile(accuracy_tree, alpha / 2)
+upper_ci_tree = np.percentile(accuracy_tree, 100 - alpha / 2)
+
+print("Model accuracy is reported on the test set. 1000 bootstrapped samples were used to calculate 95% confidence intervals.\n")
+
+print(f"Logistic Regression: Median accuracy = {median_logreg:.2f}, "
+      f"95% CI = [{lower_ci_logreg:.2f}, {upper_ci_logreg:.2f}]")
+
+print(f"Decision Tree: Median accuracy = {median_tree:.2f}, "
+      f"95% CI = [{lower_ci_tree:.2f}, {upper_ci_tree:.2f}]")
 ```
 
 ```output
 Model accuracy is reported on the test set. 1000 bootstrapped samples were used to calculate 95% confidence intervals.
-Median accuracy is 0.82 with a 95% a confidence interval of [0.73,0.90].
+
+Logistic Regression: Median accuracy = 0.82, 95% CI = [0.72, 0.90]
+Decision Tree: Median accuracy = 0.80, 95% CI = [0.70, 0.89]
 ```
 
 ```python
-sns.kdeplot(accuracy)
+# Plot distribution of bootstrap accuracy for both models
+sns.kdeplot(accuracy_logreg, label="Logistic Regression", linewidth=2)
+sns.kdeplot(accuracy_tree, label="Decision Tree", linewidth=2)
+
+# Plot median and confidence intervals for Logistic Regression
+plt.axvline(median_logreg, linestyle="--", color="red", label="LogReg Median")
+plt.axvline(lower_ci_logreg, linestyle="--", color="red", alpha=0.7)
+plt.axvline(upper_ci_logreg, linestyle="--", color="red", alpha=0.7)
+
+# Plot median and confidence intervals for Decision Tree
+plt.axvline(median_tree, linestyle="--", color="blue", label="Tree Median")
+plt.axvline(lower_ci_tree, linestyle="--", color="blue", alpha=0.7)
+plt.axvline(upper_ci_tree, linestyle="--", color="blue", alpha=0.7)
+
 plt.title("Accuracy across 1000 bootstrap samples of the held-out test set\n"
-          "showing median with 95\\% confidence intervals")
+          "Showing median with 95% confidence intervals")
 plt.xlabel("Accuracy")
-plt.axvline(median,0, 14, linestyle="--", color="red")
-plt.axvline(lower_ci,0, 14, linestyle="--", color="red")
-plt.axvline(upper_ci,0, 14, linestyle="--", color="red")
+plt.ylabel("Density")
+plt.legend()
 plt.show()
 ```
 
-![](fig/section8-fig2.png){alt='Bootstrapped accuracy with confidence' width="600px"}
+![](fig/section8-fig2-1.png){alt='Bootstrapped accuracy with confidence' width="600px"}
 
 Once an interval is calculated, it may or may not contain the true value of the unknown parameter. A 95% confidence level does \*not\* mean that there is a 95% probability that the population parameter lies within the interval.
 
