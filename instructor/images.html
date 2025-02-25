@@ -124,7 +124,7 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 <hr>
 <li><a class="dropdown-item" href="discuss.html">Discussion</a></li>
-<li><a class="dropdown-item" href="reference.html">Glossary</a></li>
+<li><a class="dropdown-item" href="reference.html">Resources</a></li>
           </ul>
 </li>
       </ul>
@@ -364,7 +364,7 @@
                       </li>
                       <hr>
 <li><a class="dropdown-item" href="discuss.html">Discussion</a></li>
-<li><a class="dropdown-item" href="reference.html">Glossary</a></li>
+<li><a class="dropdown-item" href="reference.html">Resources</a></li>
                     </ul>
 </div>
                 </div>
@@ -425,7 +425,16 @@
 <figure><img src="../fig/section5-fig2.png" alt="Sigmoid function" width="600" class="figure mx-auto d-block"></figure><hr>
 <h3 id="04-modelling-figure-3">Figure 3</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Logistic regression’</p>
-<li>You should see a plot similar to the one below: <img src="../fig/section5-fig3.png" alt="Logistic regression" width="600" class="figure">
+<li>You can reuse the Linear Regression code above and simply change
+<code>LinearRegression()</code> to <code>LogisticRegression()</code>.
+You should see a plot similar to the one below: <img src="../fig/section5-fig3.png" alt="Logistic regression" width="600" class="figure">
+</li>
+<hr>
+<h3 id="04-modelling-figure-4">Figure 4</h3>
+<p aria-hidden="true">Image 1 of 1: ‘Logistic regression’</p>
+<li>You can reuse the Linear Regression code above and simply change the
+model again to <code>DecisionTreeClassifier()</code>. You should see a
+plot similar to the one below: <img src="../fig/section5-fig4.png" alt="Logistic regression" width="600" class="figure">
 </li>
 <hr></section><section id="05-validation"><h2 class="section-heading"><a href="05-validation.html">Validation</a></h2>
 <hr class="half-width">
@@ -440,18 +449,22 @@
 <figure><img src="../fig/k_fold_cross_val.png" alt="5-fold validation" width="600" class="figure mx-auto d-block"></figure><hr></section><section id="06-evaluation"><h2 class="section-heading"><a href="06-evaluation.html">Evaluation</a></h2>
 <hr class="half-width">
 <h3 id="06-evaluation-figure-1">Figure 1</h3>
-<p aria-hidden="true">Image 1 of 1: ‘Confusion matrix’</p>
-<figure><img src="../fig/section7-fig1.png" alt="Confusion matrix" width="600" class="figure mx-auto d-block"></figure><hr>
+<p aria-hidden="true">Image 1 of 2: ‘Confusion matrix for logistic regression’</p>
+<p aria-hidden="true">Image 2 of 2: ‘Confusion matrix for decision trees’</p>
+<p><img src="../fig/section7-fig1-1.png" alt="Confusion matrix for logistic regression" width="600" class="figure"><img src="../fig/section7-fig1-2.png" alt="Confusion matrix for decision trees" width="600" class="figure"></p>
+<hr>
 <h3 id="06-evaluation-figure-2">Figure 2</h3>
-<p aria-hidden="true">Image 1 of 1: ‘AUROC’</p>
-<figure><img src="../fig/section7-fig3.png" alt="AUROC" width="600" class="figure mx-auto d-block"></figure><hr></section><section id="07-bootstrapping"><h2 class="section-heading"><a href="07-bootstrapping.html">Bootstrapping</a></h2>
+<p aria-hidden="true">Image 1 of 2: ‘AUROC’</p>
+<p aria-hidden="true">Image 2 of 2: ‘AUROC’</p>
+<p><img src="../fig/section7-fig2-1.png" alt="AUROC" width="600" class="figure"><img src="../fig/section7-fig2-2.png" alt="AUROC" width="600" class="figure"></p>
+<hr></section><section id="07-bootstrapping"><h2 class="section-heading"><a href="07-bootstrapping.html">Bootstrapping</a></h2>
 <hr class="half-width">
 <h3 id="07-bootstrapping-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Bootstrapped accuracy’</p>
-<figure><img src="../fig/section8-fig1.png" alt="Bootstrapped accuracy" width="600" class="figure mx-auto d-block"></figure><hr>
+<figure><img src="../fig/section8-fig1-1.png" alt="Bootstrapped accuracy" width="600" class="figure mx-auto d-block"></figure><hr>
 <h3 id="07-bootstrapping-figure-2">Figure 2</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Bootstrapped accuracy with confidence’</p>
-<figure><img src="../fig/section8-fig2.png" alt="Bootstrapped accuracy with confidence" width="600" class="figure mx-auto d-block"></figure><hr></section><section id="08-leakage"><h2 class="section-heading"><a href="08-leakage.html">Data leakage</a></h2>
+<figure><img src="../fig/section8-fig2-1.png" alt="Bootstrapped accuracy with confidence" width="600" class="figure mx-auto d-block"></figure><hr></section><section id="08-leakage"><h2 class="section-heading"><a href="08-leakage.html">Data leakage</a></h2>
 <hr class="half-width">
 <h3 id="08-leakage-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Dataset leakage’</p>
@@ -480,7 +493,7 @@
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.11" class="external-link">sandpaper (0.16.11)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.7" class="external-link">pegboard (0.7.7)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.5" class="external-link">varnish (1.0.5)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.11" class="external-link">sandpaper (0.16.11)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.5" class="external-link">varnish (1.0.5)</a></p>
 			</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -503,8 +516,8 @@
   "url": "https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/images.html",
   "identifier": "https://carpentries-incubator.github.io/machine-learning-novice-python/instructor/images.html",
   "dateCreated": "2021-10-15",
-  "dateModified": "2025-02-18",
-  "datePublished": "2025-02-18"
+  "dateModified": "2025-02-25",
+  "datePublished": "2025-02-25"
 }
 
   </script><script>
