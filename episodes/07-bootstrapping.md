@@ -41,7 +41,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.utils import resample
-from sklearn.metrics import accuracy_score
+from sklearn import metrics
 
 # Convert outcome to categorical type
 categories = ['ALIVE', 'EXPIRED']
@@ -83,12 +83,12 @@ for i in range(n_iterations):
     
     # Logistic Regression predictions
     y_hat_logreg = logreg.predict(X_bs)
-    score_logreg = accuracy_score(y_bs, y_hat_logreg)
+    score_logreg = metrics.accuracy_score(y_bs, y_hat_logreg)
     accuracy_logreg.append(score_logreg)
     
     # Decision Tree predictions
     y_hat_tree = tree.predict(X_bs)
-    score_tree = accuracy_score(y_bs, y_hat_tree)
+    score_tree = metrics.accuracy_score(y_bs, y_hat_tree)
     accuracy_tree.append(score_tree)
 ```
 
@@ -99,8 +99,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Plot distribution of bootstrap accuracy for both models
-sns.kdeplot(accuracy_logreg, label="Logistic Regression", fill=True, linewidth=2)
-sns.kdeplot(accuracy_tree, label="Decision Tree", fill=True linewidth=2)
+pd.Series(accuracy_logreg).plot.kde(label="Logistic Regression")
+pd.Series(accuracy_tree).plot.kde(label="Decision Tree")
 
 plt.title("Accuracy across 1000 bootstrap samples of the held-out test set")
 plt.xlabel("Accuracy")
@@ -153,8 +153,8 @@ Decision Tree: Median accuracy = 0.80, 95% CI = [0.70, 0.89]
 
 ```python
 # Plot distribution of bootstrap accuracy for both models
-sns.kdeplot(accuracy_logreg, label="Logistic Regression", linewidth=2)
-sns.kdeplot(accuracy_tree, label="Decision Tree", linewidth=2)
+pd.Series(accuracy_logreg).plot.kde(label="Logistic Regression")
+pd.Series(accuracy_tree).plot.kde(label="Decision Tree")
 
 # Plot median and confidence intervals for Logistic Regression
 plt.axvline(median_logreg, linestyle="--", color="red", label="LogReg Median")
