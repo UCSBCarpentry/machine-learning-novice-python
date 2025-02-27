@@ -5,8 +5,7 @@ title: 'Resources'
 * For questions after the workshop:
   - If you have questions about the analysis of the results or the statistics behind
 machine learning models, you can reach out to [PSTAT's DataLab](https://datascience.ucsb.edu/consulting)
-  - For questions about your project or specific questions on your code, you can email 
-the Library's DREAM Lab [dreamlab@library.ucsb.edu](mailto:dreamlab@library.ucsb.edu)
+  - For questions about your project or specific questions on your code, you can ask our Carpentry @ UCSB [#code_help](https://ucsbcarpentry.slack.com/archives/C01BUE6QKM5) Slack channel or email the Library's DREAM Lab [dreamlab@library.ucsb.edu](mailto:dreamlab@library.ucsb.edu).
 
 * Depending on the task of your project, you don't have to spend time training ML models from scratch!
 If your project involves text, images, or audio, you'll probably find a model ready to be used on

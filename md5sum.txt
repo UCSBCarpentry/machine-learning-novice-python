@@ -13,6 +13,6 @@
 "episodes/08-leakage.md" "1e05f5a275c89787e73777a5b3fa85f4" "site/built/08-leakage.md" "2025-01-28"
 "instructors/instructor-notes.md" "a59fd3b94c07c3fe3218c054a0f03277" "site/built/instructor-notes.md" "2025-01-28"
 "learners/discuss.md" "2758e2e5abd231d82d25c6453d8abbc6" "site/built/discuss.md" "2025-01-28"
-"learners/reference.md" "6bd2d10b4137149a88073e6d286c0aea" "site/built/reference.md" "2025-02-27"
+"learners/reference.md" "719a68d053daa6c17293e3d35fe4052e" "site/built/reference.md" "2025-02-27"
 "learners/setup.md" "634dde69a3a65d08142edc343ad64230" "site/built/setup.md" "2025-02-10"
 "profiles/learner-profiles.md" "60b93493cf1da06dfd63255d73854461" "site/built/learner-profiles.md" "2025-01-28"
